@@ -2,6 +2,16 @@ import java.util.*;
 public class VendingMachine {
     // Distributeur Automatique
     // menu-display
+    public static int menuprincipal() {
+        Scanner scanner = new Scanner(System.in);
+        int choix =0;
+        System.out.println("bienvenus ");
+        System.out.println("1. Afficher le produit\n 2.Achater\n 3.quitter\n");
+        System.out.println("entrer votre choix :  ");
+        choix=scanner.nextInt();
+        return choix;
+    }
+
     // afficherProduits
     public static void afficherProduits(List<String> produits, ArrayList<Double> prix, List<Integer> stock) {
         System.out.println("Produits disponibles :");
@@ -17,6 +27,7 @@ public class VendingMachine {
         ArrayList<Double> prix = new ArrayList<>(List.of(5.0, 8.0, 12.0, 15.0));
         ArrayList<Integer> stock = new ArrayList<>(List.of(10, 5, 7, 3));
         afficherProduits(produits,prix,stock);
+        menuprincipal();
 
     }
 }
