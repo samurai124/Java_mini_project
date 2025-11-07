@@ -1,5 +1,5 @@
 import java.util.*;
-public class Main {
+public class VendingMachine {
     // Distributeur Automatique
     // menu-display
     // afficherProduits
