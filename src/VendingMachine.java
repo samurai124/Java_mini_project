@@ -1,11 +1,8 @@
 import java.util.*;
 public class VendingMachine {
     static Scanner scanner = new Scanner(System.in);
-    // Distributeur Automatique
-    // menu-display
-    // afficherProduits
     // acheterProduit
-    public static void acheterProduit(ArrayList<String> produits,ArrayList<Double> prix,ArrayList<Integer> stock){
+    public static void acheterProduitv2(ArrayList<String> produits,ArrayList<Double> prix,ArrayList<Integer> stock){
         System.out.println("Entrer votre choixe :");
         int choix = scanner.nextInt();
         System.out.println("Entrer le montent :");
@@ -38,26 +35,16 @@ public class VendingMachine {
             System.out.printf("Produit : %s ; Stock : %d ; \n",produits.get(i),stock.get(i));
         }
     }
-    // admin_functions
-    public static void admin_menu(ArrayList<String> produits,ArrayList<Double> prix,ArrayList<Integer> stock){
-        Scanner input = new Scanner(System.in);
-        int admin_choice = 0;
-        System.out.print("1 : Ajouter de nouveaux produits \n2 : supprimer un produit \n 3 : modifier le prix d'un produit \n 4 : modifier la quantité d'un produit \n5 : quitter l'Admin menu !!!");
-        admin_choice = input.nextInt();
-    }
-
-    // Distributeur Automatique
     // menu-display
     public static int menuprincipal() {
         Scanner scanner = new Scanner(System.in);
         int choix =0;
         System.out.println("bienvenus ");
-        System.out.println("1. Afficher le produit\n 2.Achater\n 3.quitter\n");
-        System.out.println("entrer votre choix :  ");
+        System.out.println("1. Afficher le produit\n2.Achater\n3.mode admine\n4.quitter\n");
+        System.out.println("entrer votre choix :");
         choix=scanner.nextInt();
         return choix;
     }
-
     // afficherProduits
     public static void afficherProduits(List<String> produits, ArrayList<Double> prix, List<Integer> stock) {
         System.out.println("Produits disponibles :");
@@ -66,9 +53,7 @@ public class VendingMachine {
         }
     }
 
-    // acheterProduit
-
-    Scanner scanner = new Scanner(System.in);
+    // acheterProduit invalide code cause its static code
     public static int acheterProduit(ArrayList<Integer> stock){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Entrez le numéro du produit : ");
@@ -102,7 +87,6 @@ public class VendingMachine {
                         System.out.println("Monnaie insuffisante");
                     }
                 }while (montant < 8);
-
                 if (stock.get(1) > 1) {
                     System.out.println("Vous avez acheté : Soda");
                     int rendue = montant - 8;
@@ -145,14 +129,39 @@ public class VendingMachine {
         }
         return choix;
     }
-
-    // afficherStock
+    //mode administrateur
+    public static void administrateur(List<String> produits, ArrayList<Double> prix, List<Integer> stock) {
+        int produit_chneger = 0;
+        afficherProduits(produits, prix, stock);
+        System.out.print("Entrer le produit du stock tu veux changer :");
+        produit_chneger = scanner.nextInt();
+        System.out.print("Entrer la nouvelle quantite :");
+        int new_stock = scanner.nextInt();
+        stock.set(produit_chneger-1,new_stock);
+    }
+    // Distributeur Automatique
+    public static void distributeur_automatique(List<String> produits, ArrayList<Double> prix, List<Integer> stock){
+        int choix = 0;
+        do {
+            choix = menuprincipal();
+            switch (choix) {
+                case 1 -> afficherProduits(produits, prix, stock);
+                case 2 -> acheterProduitv2((ArrayList<String>) produits, prix, (ArrayList<Integer>) stock);
+                case 3 -> administrateur(produits,prix,stock);
+                case 4 -> System.out.println("!!!!!!");
+                default -> System.out.println("Choix invalide");
+            }
+        }while (choix != 4);
+    }
     public static void main(String[] args) {
         ArrayList<String> produits = new ArrayList<>(List.of("Eau", "Soda", "Chips", "Chocolat"));
         ArrayList<Double> prix = new ArrayList<>(List.of(5.0, 8.0, 12.0, 15.0));
         ArrayList<Integer> stock = new ArrayList<>(List.of(10, 5, 7, 3));
-        afficherStock(produits,stock);
-        afficherProduits(produits,prix,stock);
-        menuprincipal();
+        try {
+            distributeur_automatique(produits, prix, stock);
+        }catch (Exception e){
+            System.out.println(e);
+            distributeur_automatique(produits, prix, stock);
+        }
     }
 }
